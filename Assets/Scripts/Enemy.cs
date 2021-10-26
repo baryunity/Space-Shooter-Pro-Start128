@@ -8,13 +8,31 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private float _speed = 4f;
 
-    private Player _player;
+    private Player _player = null;
     private Animator _anim;
     private AudioSource _audioSource;
 
-    void Start()
+    private GameObject _go;
+
+    void Start() 
     {
-        _player = GameObject.Find("Player").GetComponent<Player>();
+        //_player = GameObject.Find("Player").GetComponent<Player>();
+        _go = GameObject.Find("Player");
+        if (_go != null)
+            _player = _go.GetComponent<Player>();
+        else
+        {
+            _go = GameObject.Find("Player_1");
+            if (_go != null)
+                _player = _go.GetComponent<Player>();
+            else
+            {
+                _go = GameObject.Find("Player_2");
+                if (_go != null)
+                    _player = _go.GetComponent<Player>();
+            }
+        }
+
         _audioSource = GetComponent<AudioSource>();
 
         if (_player == null)
